@@ -114,30 +114,21 @@ const game = {
             }
         }
 
+    },
+    
+    retreat: () => {
+        console.log(`${normandy.name} has given up. The galaxy is lost unless someone else comes.`)
     }
 
 
 }
 
+let i=0
+while(i <= game.reaperShips.length){
+    game.attack()
+    i++
+}
 
-game.setUp()
-game.attack()
-game.setUp()
-game.attack()
-game.setUp()
-game.attack()
-game.setUp()
-game.attack()
-game.setUp()
-game.attack()
-game.setUp()
-game.attack()
-game.setUp()
-game.attack()
-game.setUp()
-game.attack()
-game.setUp()
-game.attack()
 
 
 
