@@ -24,28 +24,7 @@ class SystemsAlliance {
         this.firepower = firepower;
         this.accuracy = accuracy;
     }
-    // newHull(alienShip) {
-    //     let newHP = this.hull - alienShip.firepower
-    // }
 
-    // attack(alienShip) {
-    //     if (this.accuracy > Math.random()) {
-    //         const newHull = alienShip.hull - this.firepower
-    //         if (newHull <= 0) {
-    //             alienShip.hull = 0
-    //             console.log(`The ${this.name} has defeated ${alienShip.name}`)
-    //         } else {
-    //             alienShip.hull = newHull
-    //             console.log(`The ${this.name} attacked! ${alienShip.name}'s hull is ${alienShip.hull}`)
-    //         }
-    //     } else {
-    //         console.log(`The ${this.name} misses.`)
-    //         setTimeout(() => {
-    //             alienShip.attack(this)
-    //         }, 2000)
-    //     }
-
-    // }
 }
 
 class AlienShip {
@@ -56,30 +35,7 @@ class AlienShip {
         this.accuracy = accuracy;
     }
 
-    // newHull(humanShip) {
-    //     let newHP = this.hull - humanShip.firepower
-    //     console.log(newHP)
-    // }
-    //this attacks the other ship
-    // attack(humanShip) {
-    //     if (this.accuracy > Math.random()) {
-    //         const newHull = humanShip.hull - this.firepower
-    //         if (newHull <= 0) {
-    //             humanShip.hull = 0
-    //             console.log(`${this.name} has defeated ${humanShip.name}`)
-    //         } else {
-    //             humanShip.hull = newHull
-    //             console.log(`The ${this.name} attacked! ${humanShip.name}'s hull is ${humanShip.hull}`)
-    //         }
-    //     } else {
-    //         console.log(`The ${this.name} misses.`)
-    //         setTimeout(() => {
-    //             humanShip.attack(this)
-    //         }, 2000)
 
-    //     }
-
-    // }
 }
 
 //**this helps get a random number between the min and max values
@@ -108,39 +64,53 @@ const reaper5 = new AlienShip('Reaper 5', randomNumber(2, 6), randomNumber(1, 4)
 
 const reaper6 = new AlienShip('Reaper 6', randomNumber(2, 6), randomNumber(1, 4), randomAccuracy(0.6, 0.8))
 
-// let reaperArray = [reaper1, reaper2, reaper3, reaper4, reaper5, reaper6]
+let reaperArray = [reaper1, reaper2, reaper3, reaper4, reaper5, reaper6]
 
 
 //how the game will run
 const game = {
     reaperShips: [reaper1, reaper2, reaper3, reaper4, reaper5, reaper6],
-    humanShipHealth: [normandy.hull], 
+    humanShipHealth: [normandy.hull],
     setUp: () => {
         // reaperShips.push(reaperArray)
         console.log(`==== ${normandy.name} VS The ${game.reaperShips[0].name} ====`)
-        console.log(`${game.reaperShips[0].name}: ${game.reaperShips[0].hull}`)
-        console.log(`${normandy.name}: ${normandy.hull}`)
     },
     attack: () => {
-        if(Math.random() < normandy.accuracy){
+        if (Math.random() < normandy.accuracy) { //determines if the human ship goes first
             console.log(`${normandy.name} attacks!`)
-            let alienNewHP = game.reaperShips[0].hull - normandy.firepower
-            if(alienNewHP <= 0) {
+            let alienNewHP = game.reaperShips[0].hull - normandy.firepower  //the health of the alienship after the attack
+            if (alienNewHP <= 0) { // if the alien ship dies
                 console.log(`${game.reaperShips[0].name} has been defeated!`)
-                game.reaperShips.shift()
+                game.reaperShips.shift() //takes out the first alien from the array
                 console.log(`REMAINING REAPER SHIPS:`)
                 console.log(game.reaperShips)
             } else {
-                console.log (`${game.reaperShips[0].name} has ${alienNewHP} hull`)
+                game.reaperShips[0].hull = alienNewHP //if alien ship survives the attack
+                console.log(`${game.reaperShips[0].name} has ${game.reaperShips[0].hull} hull`)
+                if (Math.random() < game.reaperShips[0].accuracy) { //after human ship attacks, alien attacks if passes test
+                    console.log(`${game.reaperShips[0].name} attacks!`)
+                    let humanNewHP = normandy.hull - game.reaperShips[0].firepower // the health of the human ship after the alien attack
+                    if (humanNewHP <= 0) { //if the normandy is defeated
+                        console.log(`${normandy.name} has been defeated!`)
+                        console.log('The galaxy is lost.')
+                    } else {
+                        normandy.hull = humanNewHP //reassigns the human ship health
+                        console.log(`${normandy.name} has ${normandy.hull} hull`)
+                    }
+                } else {
+                    console.log(`${game.reaperShips[0].name} misses!`)
+                }
             }
-        } else{
+        } else { //human ship misses so the alien ship attacks
+            console.log(`The ${normandy.name} missed!`) 
             console.log(`${game.reaperShips[0].name} attacks!`)
-            let humanNewHP = normandy.hull - game.reaperShips[0].firepower
-            if(humanNewHP <= 0) {
+            let humanNewHP = normandy.hull - game.reaperShips[0].firepower //new health of human ship
+            if (humanNewHP <= 0) {
                 console.log(`${normandy.name} has been defeated!`)
                 console.log('The galaxy is lost.')
             } else {
-                console.log (`${normandy.name} has ${humanNewHP} hull`)
+                normandy.hull = humanNewHP
+                console.log(`${normandy.name} has ${humanNewHP} hull`)
             }
         }
 
@@ -150,6 +120,20 @@ const game = {
 }
 
 
+game.setUp()
+game.attack()
+game.setUp()
+game.attack()
+game.setUp()
+game.attack()
+game.setUp()
+game.attack()
+game.setUp()
+game.attack()
+game.setUp()
+game.attack()
+game.setUp()
+game.attack()
 game.setUp()
 game.attack()
 game.setUp()
