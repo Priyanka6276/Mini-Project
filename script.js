@@ -74,60 +74,87 @@ const game = {
     setUp: () => {
         // reaperShips.push(reaperArray)
         console.log(`==== ${normandy.name} VS The ${game.reaperShips[0].name} ====`)
+        document.querySelector("#title").textContent = `==== ${normandy.name} VS The ${game.reaperShips[0].name} ====`
     },
     attack: () => {
         if (Math.random() < normandy.accuracy) { //determines if the human ship goes first
             console.log(`${normandy.name} attacks!`)
+            document.querySelector("#who-attacks").textContent = `${normandy.name} attacks!`
             let alienNewHP = game.reaperShips[0].hull - normandy.firepower  //the health of the alienship after the attack
             if (alienNewHP <= 0) { // if the alien ship dies
                 console.log(`${game.reaperShips[0].name} has been defeated!`)
+                document.querySelector("#ship").textContent = `${game.reaperShips[0].name} has been defeated!`
                 game.reaperShips.shift() //takes out the first alien from the array
                 console.log(`REMAINING REAPER SHIPS:`)
                 console.log(game.reaperShips)
+                document.querySelector("#remaining-reapers").textContent = `${game.reaperShips[0].name}`
             } else {
                 game.reaperShips[0].hull = alienNewHP //if alien ship survives the attack
                 console.log(`${game.reaperShips[0].name} has ${game.reaperShips[0].hull} hull`)
+                document.querySelector("#reaper-hull").textContent = `${game.reaperShips[0].name} has ${game.reaperShips[0].hull} hull`
                 if (Math.random() < game.reaperShips[0].accuracy) { //after human ship attacks, alien attacks if passes test
                     console.log(`${game.reaperShips[0].name} attacks!`)
+                    document.querySelector("#who-attacks").textContent = `${game.reaperShips[0].name} attacks!`
                     let humanNewHP = normandy.hull - game.reaperShips[0].firepower // the health of the human ship after the alien attack
                     if (humanNewHP <= 0) { //if the normandy is defeated
                         console.log(`${normandy.name} has been defeated!`)
+                        document.querySelector("#ship").textContent = `${normandy.name} has been defeated!`
                         console.log('The galaxy is lost.')
+                        document.querySelector("#end").textContent = 'The galaxy is lost.'
                     } else {
                         normandy.hull = humanNewHP //reassigns the human ship health
                         console.log(`${normandy.name} has ${normandy.hull} hull`)
+                        document.querySelector("#normandy-hull").textContent = `${normandy.name} has ${normandy.hull} hull`
                     }
                 } else {
                     console.log(`${game.reaperShips[0].name} misses!`)
+                    document.querySelector("#who-misses").textContent = `${game.reaperShips[0].name} misses!`
                 }
             }
         } else { //human ship misses so the alien ship attacks
             console.log(`The ${normandy.name} missed!`) 
+            document.querySelector("#who-misses").textContent = `The ${normandy.name} missed!`
             console.log(`${game.reaperShips[0].name} attacks!`)
+            document.querySelector("#who-attacks").textContent = `${game.reaperShips[0].name} attacks!`
             let humanNewHP = normandy.hull - game.reaperShips[0].firepower //new health of human ship
             if (humanNewHP <= 0) {
                 console.log(`${normandy.name} has been defeated!`)
+                document.querySelector("#ship").textContent = `${normandy.name} has been defeated!`
                 console.log('The galaxy is lost.')
+                document.querySelector("#end").textContent = 'The galaxy is lost.'
             } else {
                 normandy.hull = humanNewHP
                 console.log(`${normandy.name} has ${humanNewHP} hull`)
+                document.querySelector("#normandy-hull").textContent = `${normandy.name} has ${normandy.hull} hull`
             }
         }
 
     },
     
-    retreat: () => {
+    retreat: () => { //an option to retreat and let the galaxy die...
         console.log(`${normandy.name} has given up. The galaxy is lost unless someone else comes.`)
+        document.querySelector("#end").textContent =  `${normandy.name} has given up. The galaxy is lost unless someone else comes.`
     }
 
 
 }
 
-let i=0
-while(i <= game.reaperShips.length){
-    game.attack()
-    i++
-}
+//I practiced a lot on this so it might be a bit different from last. :)
+
+
+// my loops stop after Reaper 2 or 3. And I don't know why :(
+
+// let i=0
+// while(i <= game.reaperShips.length){
+//     game.setUp()
+//     game.attack()
+//     i++
+// }
+
+// game.reaperShips.forEach(()=>{
+//     game.setUp()
+//     game.attack()
+// })
 
 
 
